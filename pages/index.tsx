@@ -2,8 +2,10 @@ import { Grid } from "@/components/Grid";
 import { Wrapper } from "@/components/Wrapper";
 import Head from "next/head";
 
-export default function Home() {
-  const numItems = 10000;
+export default function Home({ response }) {
+  console.log(response);
+
+  const numItems = process.env.NODE_ENV === "development" ? 1000 : 10000;
 
   return (
     <>
@@ -30,3 +32,19 @@ export default function Home() {
     </>
   );
 }
+
+export const getStaticProps = async () => {
+  const response = "test";
+
+  if (response) {
+    return {
+      props: {
+        response,
+      },
+    };
+  } else {
+    return {
+      props: {},
+    };
+  }
+};

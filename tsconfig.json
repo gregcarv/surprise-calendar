@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "es2019",
+    "lib": ["es2019", "dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,6 +19,12 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["../next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "../next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "utils/db/index.js",
+    "utils/db/index.js"
+  ],
   "exclude": ["node_modules"]
 }
