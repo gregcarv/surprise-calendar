@@ -3,11 +3,13 @@ import { getXY } from "@/lib/getXY";
 import { isTouchDevice } from "@/lib/isTouchDevice";
 import { scratch } from "@/lib/scratch";
 import { TGridItemProps, TmousePosition } from "@/types/gridItem";
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { useEffect, useRef, useState } from "react";
 
 export const GridItem = ({
   index,
+  isAvailable,
   children,
   ...otherProps
 }: TGridItemProps) => {
@@ -110,7 +112,20 @@ export const GridItem = ({
   return (
     <div {...otherProps} onClick={handleClick}>
       {children}
-      <canvas width="200" height="200" ref={canvasRef} />
+      <Overlay
+        width="200"
+        height="200"
+        ref={canvasRef}
+        isAvailable={isAvailable}
+      />
     </div>
   );
 };
+
+const Overlay = styled.canvas<{ isAvailable: boolean }>`
+  ${({ isAvailable }) =>
+    !isAvailable &&
+    css`
+      display: none;
+    `}
+`;

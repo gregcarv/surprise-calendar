@@ -1,10 +1,9 @@
 import { Grid } from "@/components/Grid";
 import { Wrapper } from "@/components/Wrapper";
+import { useFirebaseDataContext } from "@/contexts/firebase/firebaseDataContext";
 import Head from "next/head";
 
-export default function Home({ response }) {
-  console.log(response);
-
+export default function Home() {
   const numItems = process.env.NODE_ENV === "development" ? 1000 : 10000;
 
   return (
@@ -32,19 +31,3 @@ export default function Home({ response }) {
     </>
   );
 }
-
-export const getStaticProps = async () => {
-  const response = "test";
-
-  if (response) {
-    return {
-      props: {
-        response,
-      },
-    };
-  } else {
-    return {
-      props: {},
-    };
-  }
-};

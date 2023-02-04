@@ -1,13 +1,17 @@
 import { TGridProps } from "@/types/grid";
 import { GridItem } from "./GridItem";
 import styled from "@emotion/styled";
+import { useFirebaseDataContext } from "@/contexts/firebase/firebaseDataContext";
 
 export const Grid = ({ numItems, ...otherProps }: TGridProps) => {
+  const { data } = useFirebaseDataContext();
+
   let GridItems = [];
 
   for (let i = 1; i <= numItems; i++) {
+    const isAvailable = data && data[i] ? data[i].available : true;
     GridItems.push(
-      <GridItem index={i} key={`item-${i}`}>
+      <GridItem index={i} key={`item-${i}`} isAvailable={isAvailable}>
         {i}
       </GridItem>
     );
