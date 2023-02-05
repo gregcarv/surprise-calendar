@@ -8,16 +8,14 @@ export const Grid = ({ ...otherProps }: TGridProps) => {
   const { data, cardClicked } = useFirebaseDataContext();
 
   return (
-    <GridRoot {...otherProps} cardClicked={cardClicked}>
+    <GridRoot {...otherProps} cardClicked={cardClicked.clicked}>
       {(data || []).map((card) => {
         return (
           <GridItem
-            index={card.id}
+            data={card}
             key={`item-${card.id}`}
-            isAvailable={card.available}
-          >
-            {card.id}
-          </GridItem>
+            clickedId={cardClicked.id}
+          />
         );
       })}
     </GridRoot>
@@ -50,9 +48,7 @@ const GridRoot = styled.div<{ cardClicked: boolean }>`
   > div {
     position: relative;
     display: grid;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.35);
     font-size: 1rem;
     aspect-ratio: 1/1;
     border: 1px solid #000000;
@@ -62,8 +58,24 @@ const GridRoot = styled.div<{ cardClicked: boolean }>`
         cursor: not-allowed;
       `}
 
+    > span {
+      z-index: 2;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      opacity: 0.5;
+    }
+
+    > strong {
+      display: grid;
+      text-align: center;
+      align-self: center;
+      padding: 0.5rem;
+    }
+
     > canvas {
       position: absolute;
+      z-index: 1;
       width: 100%;
       height: 100%;
       transform: translate(-50%, -50%);

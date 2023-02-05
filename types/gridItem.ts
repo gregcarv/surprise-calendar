@@ -1,9 +1,9 @@
 import React from "react";
+import { TdataEntry } from "./data";
 
 export type TGridItemProps = {
-  index: number;
-  isAvailable: boolean;
-  children: React.ReactNode;
+  data: TdataEntry;
+  clickedId: number;
 };
 
 export type TmousePosition = { x: number; y: number };

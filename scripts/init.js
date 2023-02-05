@@ -12,6 +12,8 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
+const numberOfCards = process.env.NODE_ENV === "development" ? 300 : 10000;
+
 function generateRandom(max, exclude) {
   const num = Math.round(Math.random() * max);
   return exclude && num !== exclude ? generateRandom(max) : num;
@@ -41,6 +43,8 @@ function getCards(numItems) {
   const firebaseApp = initializeApp(firebaseConfig);
   const database = getDatabase(firebaseApp);
 
+  const cardEntries = [];
+
   cardIndices.map((card, index) => {
     const value =
       index === winnerPosition
@@ -48,12 +52,14 @@ function getCards(numItems) {
         : consolationPrizePositions.some((item) => item === index)
         ? 100
         : 0;
-    set(ref(database, "entries/" + index), {
+    cardEntries.push({
       id: card,
       available: true,
       value,
     });
   });
+
+  set(ref(database, "entries"), cardEntries);
 }
 
 function withInit(nextConfig = {}) {
@@ -61,7 +67,7 @@ function withInit(nextConfig = {}) {
     ...nextConfig,
     // Not actually overwriting rewrites. Just using the async function to fetch optimizely datafile.
     rewrites: () => {
-      getCards(10000);
+      getCards(numberOfCards);
       return nextConfig.rewrites ? nextConfig.rewrites() : {};
     },
   };

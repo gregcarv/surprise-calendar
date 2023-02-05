@@ -6,6 +6,6 @@ export type TFirebaseProviderProps = {
 
 export interface IuseFirebaseDataContext {
   handleSetData: ({ id, available, value }: TdataEntry) => void;
-  cardClicked: boolean;
+  cardClicked: { clicked: boolean; id: number | null };
   data: TdataEntry[] | null;
 }
