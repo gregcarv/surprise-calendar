@@ -1,4 +1,3 @@
-import { TmousePosition } from "@/types/gridItem";
 import { isTouchDevice } from "./isTouchDevice";
 
 //Exact x and y position of mouse/touch

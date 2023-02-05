@@ -1,21 +1,13 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue } from "firebase/database";
-import {
-  createContext,
-  SetStateAction,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { firebaseConfig } from "./firebaseConfig";
+import { getDatabase, ref, onValue, set } from "firebase/database";
+import { createContext, useContext, useEffect, useState } from "react";
+import { firebaseConfig } from "@/config/firebaseConfig";
 import { IuseFirebaseDataContext, TFirebaseProviderProps } from "./types";
+import { TdataEntry } from "@/types/data";
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
+const dbRefName = "entries";
 
 export const FirebaseDataContext = createContext<
   IuseFirebaseDataContext | undefined
@@ -24,11 +16,19 @@ export const FirebaseDataContext = createContext<
 export const FirebaseDataContextProvider = function ({
   children,
 }: TFirebaseProviderProps): React.ReactElement {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<TdataEntry[] | null>(null);
+  const database = getDatabase(firebaseApp);
+
+  const handleSetData = ({ id, available, value }: TdataEntry): void => {
+    set(ref(database, `${dbRefName}/` + id), {
+      id,
+      available,
+      value,
+    });
+  };
 
   useEffect(() => {
-    const database = getDatabase(firebaseApp);
-    const entries = ref(database, "entry");
+    const entries = ref(database, dbRefName);
 
     return onValue(entries, (snapshot) => {
       if (snapshot.exists()) {
@@ -38,9 +38,9 @@ export const FirebaseDataContextProvider = function ({
         return;
       }
     });
-  }, []);
+  }, [database]);
 
-  const value = { data };
+  const value = { data, handleSetData };
 
   return (
     <FirebaseDataContext.Provider value={value}>

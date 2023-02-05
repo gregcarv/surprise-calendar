@@ -1,13 +1,10 @@
+import { TdataEntry } from "@/types/data";
+
 export type TFirebaseProviderProps = {
   children: React.ReactNode;
 };
 
 export interface IuseFirebaseDataContext {
-  data:
-    | {
-        available: boolean;
-        id: number;
-        value: number;
-      }[]
-    | null;
+  handleSetData: ({ id, available, value }: TdataEntry) => void;
+  data: TdataEntry[] | null;
 }

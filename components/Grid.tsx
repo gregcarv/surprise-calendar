@@ -2,22 +2,38 @@ import { TGridProps } from "@/types/grid";
 import { GridItem } from "./GridItem";
 import styled from "@emotion/styled";
 import { useFirebaseDataContext } from "@/contexts/firebase/firebaseDataContext";
+import { TdataEntry } from "@/types/data";
+
+const getCards = (numItems: number) => {
+  const cardIndices = Array.from(Array(numItems).keys());
+
+  const winnerPosition = Math.round(Math.random() * numItems);
+
+  return cardIndices.map((card, index) => {
+    const available = true;
+    const value = index === winnerPosition ? 25000 : 0;
+    return { id: card, available, value };
+  });
+};
 
 export const Grid = ({ numItems, ...otherProps }: TGridProps) => {
-  const { data } = useFirebaseDataContext();
+  const cards = getCards(numItems);
 
-  let GridItems = [];
-
-  for (let i = 1; i <= numItems; i++) {
-    const isAvailable = data && data[i] ? data[i].available : true;
-    GridItems.push(
-      <GridItem index={i} key={`item-${i}`} isAvailable={isAvailable}>
-        {i}
-      </GridItem>
-    );
-  }
-
-  return <GridRoot {...otherProps}>{GridItems}</GridRoot>;
+  return (
+    <GridRoot {...otherProps}>
+      {cards.map((card) => {
+        return (
+          <GridItem
+            index={card.id}
+            key={`item-${card.id}`}
+            isAvailable={card.available}
+          >
+            {card.id}
+          </GridItem>
+        );
+      })}
+    </GridRoot>
+  );
 };
 
 const GridRoot = styled.div`

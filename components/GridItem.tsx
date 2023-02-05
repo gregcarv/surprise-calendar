@@ -1,7 +1,8 @@
-import { EVENT_TYPES } from "@/constants/eventTypes";
-import { getXY } from "@/lib/getXY";
-import { isTouchDevice } from "@/lib/isTouchDevice";
-import { scratch } from "@/lib/scratch";
+import { useFirebaseDataContext } from "@/contexts/firebase/firebaseDataContext";
+import { EVENT_TYPES } from "@/lib/constants/eventTypes";
+import { getXY } from "@/lib/utils/getXY";
+import { isTouchDevice } from "@/lib/utils/isTouchDevice";
+import { scratch } from "@/lib/utils/scratch";
 import { TGridItemProps, TmousePosition } from "@/types/gridItem";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
@@ -13,6 +14,15 @@ export const GridItem = ({
   children,
   ...otherProps
 }: TGridItemProps) => {
+  const { data, handleSetData } = useFirebaseDataContext();
+  const [cardAvailable, setCardAvailable] = useState<boolean>(isAvailable);
+
+  useEffect(() => {
+    if (data && data[index]) {
+      setCardAvailable(data[index].available);
+    }
+  }, [data, index]);
+
   const [mousePosition, setMousePosition] = useState<TmousePosition>({
     x: 0,
     y: 0,
@@ -31,7 +41,7 @@ export const GridItem = ({
   let rectTop = canvasElem?.getBoundingClientRect().top || 0;
 
   const handleClick = () => {
-    console.log({ scratch: index });
+    handleSetData({ id: index, available: false, value: 0 });
   };
 
   // // set device type
@@ -116,7 +126,7 @@ export const GridItem = ({
         width="200"
         height="200"
         ref={canvasRef}
-        isAvailable={isAvailable}
+        isAvailable={cardAvailable}
       />
     </div>
   );
