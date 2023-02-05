@@ -1,11 +1,8 @@
 import { Grid } from "@/components/Grid";
 import { Wrapper } from "@/components/Wrapper";
-import { useFirebaseDataContext } from "@/contexts/firebase/firebaseDataContext";
 import Head from "next/head";
 
 export default function Home() {
-  const numItems = process.env.NODE_ENV === "development" ? 1000 : 10000;
-
   return (
     <>
       <Head>
@@ -25,7 +22,7 @@ export default function Home() {
           </h1>
         </Wrapper>
         <Wrapper>
-          <Grid numItems={numItems} />
+          <Grid />
         </Wrapper>
       </main>
     </>

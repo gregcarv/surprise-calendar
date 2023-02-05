@@ -2,7 +2,6 @@ import { TGridProps } from "@/types/grid";
 import { GridItem } from "./GridItem";
 import styled from "@emotion/styled";
 import { useFirebaseDataContext } from "@/contexts/firebase/firebaseDataContext";
-import { TdataEntry } from "@/types/data";
 import { css } from "@emotion/react";
 
 export const Grid = ({ ...otherProps }: TGridProps) => {
