@@ -1,8 +1,9 @@
 import { useFirebaseDataContext } from "@/contexts/firebase/firebaseDataContext";
+import { useScratchOff } from "@/hooks/useScratchOff";
 import { TGridItemProps } from "@/types/gridItem";
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const GridItem = ({
   data,
@@ -11,6 +12,9 @@ export const GridItem = ({
 }: TGridItemProps) => {
   const { handleSetData } = useFirebaseDataContext();
   const [cardAvailable, setCardAvailable] = useState<boolean>(data.available);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useScratchOff(canvasRef);
 
   useEffect(() => {
     setCardAvailable(data.available);
@@ -30,7 +34,12 @@ export const GridItem = ({
             : `Sorry. Try again next season.`}
         </strong>
       ) : null}
-      <Overlay width="200" height="200" isAvailable={cardAvailable} />
+      <Overlay
+        width="200"
+        height="200"
+        isAvailable={cardAvailable}
+        ref={canvasRef}
+      />
     </div>
   );
 };

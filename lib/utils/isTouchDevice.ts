@@ -8,3 +8,5 @@ export const isTouchDevice = (): boolean => {
     return false;
   }
 };
+
+export const isdeviceType = isTouchDevice() ? "touch" : "mouse";
