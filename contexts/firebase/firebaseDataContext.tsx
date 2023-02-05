@@ -15,9 +15,10 @@ export const FirebaseDataContext = createContext<
 >(undefined);
 
 export const FirebaseDataContextProvider = function ({
+  initialData,
   children,
 }: TFirebaseProviderProps): React.ReactElement {
-  const [data, setData] = useState<TdataEntry[] | null>(null);
+  const [data, setData] = useState<TdataEntry[] | null>(initialData);
   const [cardClicked, setCardClicked] = useState<{
     clicked: boolean;
     id: number | null;

@@ -1,6 +1,7 @@
 import { TdataEntry } from "@/types/data";
 
 export type TFirebaseProviderProps = {
+  initialData: TdataEntry[];
   children: React.ReactNode;
 };
 

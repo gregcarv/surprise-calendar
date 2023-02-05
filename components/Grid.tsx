@@ -8,7 +8,11 @@ export const Grid = ({ ...otherProps }: TGridProps) => {
   const { data, cardClicked } = useFirebaseDataContext();
 
   return (
-    <GridRoot {...otherProps} cardClicked={cardClicked.clicked}>
+    <GridRoot
+      {...otherProps}
+      cardClicked={cardClicked.clicked}
+      data-testid="grid"
+    >
       {(data || []).map((card) => {
         return (
           <GridItem

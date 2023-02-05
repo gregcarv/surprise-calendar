@@ -1,7 +1,6 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Source_Sans_Pro, Libre_Baskerville } from "@next/font/google";
-import { FirebaseDataContextProvider } from "@/contexts/firebase/firebaseDataContext";
 
 const sourceSansPro = Source_Sans_Pro({
   weight: ["300", "400", "600"],
@@ -30,9 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
           font-family: ${libreBaskerville.style.fontFamily};
         }
       `}</style>
-      <FirebaseDataContextProvider>
-        <Component {...pageProps} />
-      </FirebaseDataContextProvider>
+      <Component {...pageProps} />
     </>
   );
 }

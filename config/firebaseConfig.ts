@@ -1,19 +1,11 @@
-const apiKey = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
-const authDomain = process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN;
-const databaseURL = process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL;
-const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
-const storageBucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
-const messagingSenderId = process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID;
-const appId = process.env.NEXT_PUBLIC_FIREBASE_APP_ID;
-const measurementId = process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID;
-
 export const firebaseConfig = {
-  apiKey,
-  authDomain,
-  databaseURL,
-  projectId,
-  storageBucket,
-  messagingSenderId,
-  appId,
-  measurementId,
+  apiKey: "AIzaSyBAjm9fhTK2HTXAQc1gxwa8qehf-rzLZwk",
+  authDomain: "surprise-calendar-dfb14.firebaseapp.com",
+  databaseURL:
+    "https://surprise-calendar-dfb14-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "surprise-calendar-dfb14",
+  storageBucket: "surprise-calendar-dfb14.appspot.com",
+  messagingSenderId: "889674746877",
+  appId: "1:889674746877:web:7a7101b15f4b5e0ece6794",
+  measurementId: "G-N38QSC79H4",
 };

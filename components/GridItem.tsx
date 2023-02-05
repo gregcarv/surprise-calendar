@@ -21,9 +21,9 @@ export const GridItem = ({
   };
 
   return (
-    <div {...otherProps} onClick={handleClick}>
+    <div {...otherProps} onClick={handleClick} data-testid="grid-item">
       <span>{data.id}</span>
-      {clickedId === data.id ? (
+      {clickedId && clickedId === data.id ? (
         <strong>
           {data.value > 0
             ? `You win € ${data.value}!`
