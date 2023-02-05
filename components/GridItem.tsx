@@ -14,9 +14,7 @@ export const GridItem = ({
   const [cardAvailable, setCardAvailable] = useState<boolean>(isAvailable);
 
   useEffect(() => {
-    if (isAvailable) {
-      setCardAvailable(isAvailable);
-    }
+    setCardAvailable(isAvailable);
   }, [isAvailable]);
 
   const handleClick = () => {

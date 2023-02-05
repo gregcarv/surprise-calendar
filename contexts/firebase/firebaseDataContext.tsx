@@ -26,6 +26,7 @@ export const FirebaseDataContextProvider = function ({
     if (!cookie) {
       setCookie("card-clicked", id, { maxAge: 60 * 60 * 24 });
       setCardClicked(true);
+
       set(ref(database, `${dbRefName}/` + id), {
         id,
         available,
@@ -52,7 +53,7 @@ export const FirebaseDataContextProvider = function ({
         return;
       }
     });
-  }, [database]);
+  }, [cardClicked, database]);
 
   const value = { data, handleSetData, cardClicked };
 
