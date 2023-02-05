@@ -3,12 +3,13 @@ import { GridItem } from "./GridItem";
 import styled from "@emotion/styled";
 import { useFirebaseDataContext } from "@/contexts/firebase/firebaseDataContext";
 import { TdataEntry } from "@/types/data";
+import { css } from "@emotion/react";
 
 export const Grid = ({ ...otherProps }: TGridProps) => {
-  const { data } = useFirebaseDataContext();
+  const { data, cardClicked } = useFirebaseDataContext();
 
   return (
-    <GridRoot {...otherProps}>
+    <GridRoot {...otherProps} cardClicked={cardClicked}>
       {(data || []).map((card) => {
         return (
           <GridItem
@@ -24,7 +25,7 @@ export const Grid = ({ ...otherProps }: TGridProps) => {
   );
 };
 
-const GridRoot = styled.div`
+const GridRoot = styled.div<{ cardClicked: boolean }>`
   --columns: 2;
   display: grid;
   grid-template-columns: repeat(var(--columns), minmax(5rem, 1fr));
@@ -56,6 +57,11 @@ const GridRoot = styled.div`
     font-size: 1rem;
     aspect-ratio: 1/1;
     border: 1px solid #000000;
+    ${({ cardClicked }) =>
+      cardClicked &&
+      css`
+        cursor: not-allowed;
+      `}
 
     > canvas {
       position: absolute;
@@ -67,6 +73,11 @@ const GridRoot = styled.div`
       text-align: center;
       background-color: green;
       cursor: grabbing;
+      ${({ cardClicked }) =>
+        cardClicked &&
+        css`
+          cursor: not-allowed;
+        `}
 
       -webkit-tap-highlight-color: transparent;
       -webkit-touch-callout: none;

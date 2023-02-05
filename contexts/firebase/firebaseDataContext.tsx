@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { firebaseConfig } from "@/config/firebaseConfig";
 import { IuseFirebaseDataContext, TFirebaseProviderProps } from "./types";
 import { TdataEntry } from "@/types/data";
+import { hasCookie, setCookie } from "cookies-next";
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
@@ -17,15 +18,28 @@ export const FirebaseDataContextProvider = function ({
   children,
 }: TFirebaseProviderProps): React.ReactElement {
   const [data, setData] = useState<TdataEntry[] | null>(null);
+  const [cardClicked, setCardClicked] = useState<boolean>(false);
   const database = getDatabase(firebaseApp);
 
   const handleSetData = ({ id, available, value }: TdataEntry): void => {
-    set(ref(database, `${dbRefName}/` + id), {
-      id,
-      available,
-      value,
-    });
+    const cookie = hasCookie("card-clicked");
+    if (!cookie) {
+      setCookie("card-clicked", id, { maxAge: 60 * 60 * 24 });
+      setCardClicked(true);
+      set(ref(database, `${dbRefName}/` + id), {
+        id,
+        available,
+        value,
+      });
+    }
   };
+
+  useEffect(() => {
+    const cookie = hasCookie("card-clicked");
+    if (cookie) {
+      setCardClicked(true);
+    }
+  }, []);
 
   useEffect(() => {
     const entries = ref(database, dbRefName);
@@ -40,7 +54,7 @@ export const FirebaseDataContextProvider = function ({
     });
   }, [database]);
 
-  const value = { data, handleSetData };
+  const value = { data, handleSetData, cardClicked };
 
   return (
     <FirebaseDataContext.Provider value={value}>

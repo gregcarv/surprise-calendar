@@ -14,14 +14,14 @@ export const GridItem = ({
   children,
   ...otherProps
 }: TGridItemProps) => {
-  const { data, handleSetData } = useFirebaseDataContext();
+  const { handleSetData } = useFirebaseDataContext();
   const [cardAvailable, setCardAvailable] = useState<boolean>(isAvailable);
 
   useEffect(() => {
-    if (data && data[index]) {
-      setCardAvailable(data[index].available);
+    if (isAvailable) {
+      setCardAvailable(isAvailable);
     }
-  }, [data, index]);
+  }, [isAvailable]);
 
   const [mousePosition, setMousePosition] = useState<TmousePosition>({
     x: 0,
