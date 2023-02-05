@@ -1,5 +1,3 @@
 import React from "react";
 
-export type TGridProps = {
-  numItems: number;
-};
+export type TGridProps = {};

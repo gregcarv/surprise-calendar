@@ -4,24 +4,12 @@ import styled from "@emotion/styled";
 import { useFirebaseDataContext } from "@/contexts/firebase/firebaseDataContext";
 import { TdataEntry } from "@/types/data";
 
-const getCards = (numItems: number) => {
-  const cardIndices = Array.from(Array(numItems).keys());
-
-  const winnerPosition = Math.round(Math.random() * numItems);
-
-  return cardIndices.map((card, index) => {
-    const available = true;
-    const value = index === winnerPosition ? 25000 : 0;
-    return { id: card, available, value };
-  });
-};
-
-export const Grid = ({ numItems, ...otherProps }: TGridProps) => {
-  const cards = getCards(numItems);
+export const Grid = ({ ...otherProps }: TGridProps) => {
+  const { data } = useFirebaseDataContext();
 
   return (
     <GridRoot {...otherProps}>
-      {cards.map((card) => {
+      {(data || []).map((card) => {
         return (
           <GridItem
             index={card.id}
