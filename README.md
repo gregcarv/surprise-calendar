@@ -1,6 +1,6 @@
-# Casestudy Front-end Developer
+# Casestudy
 
-NLO organizes a new promotional game.
+promotional game.
 
 - A website needs to be developed where visitors see a huge surprise calendar with 10000 scratchable areas.
 - In one area there is the main prize of 25000 euros.
